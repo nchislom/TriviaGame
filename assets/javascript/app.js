@@ -43,6 +43,10 @@ var getScore = function() {
     return score + '%';
 }
 
-var displayQuestion = function(num){
+var displayQuestion = function(qNumber){
     
+}
+
+var displayAnswer = function(qNumber, userInput){
+
 }
