@@ -1,13 +1,57 @@
+body {
+
+}
+
+.game-screen {
+    text-align: center;
+    border: 1px solid black;
+    width: 90%;
+    margin: 1em auto;
+    display: inline-block;
+}
+
+.header {
+    font-size: 5em;
+}
+
+.timer-text {
+    border: 1px solid black;
+    padding: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    /* width: 50%; */
+    display: inline-block;
+}
+
 .splash-section {
     display: none;
 }
 
 .question-section {
     /* display: none; */
+    font-size: 3em;
+    font-weight: 600;
+    border-bottom: 1px solid #777;
+    width: 50%;
+    margin: 1em auto;
 }
 
 .answer-section {
     /* display: none; */
+}
+
+.question-result {
+
+}
+
+.correct {
+    background-color: red;
+    color: white;
+}
+
+.wrong {
+    background-color: green;
+    color: white;
 }
 
 .result-section {
@@ -15,11 +59,12 @@
 }
 
 li {
-    list-style-type: none;
+    list-style: none;
     margin: 1em;
     padding: 1em;
 }
 
 li:hover {
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    background-color: lightblue;
 }

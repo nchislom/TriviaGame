@@ -1,9 +1,10 @@
-// Globals - Scorekeeping
+// Globals - Scorekeeping and Current Answer Status
 var correctAnswers = 0;
+var correct = false;
 
 // Globals - Timer Functionality
 var clockRunning = false;
-var time = 0;
+var timeLeft = 5;
 var intervalId;
 
 // Global - Quiz Object
@@ -45,12 +46,13 @@ var quiz = {
     }
 }
 
-// Score Calculation    
+// Score Calculation 
 var getScore = function() {
     var score = Math.floor(correctAnswers/Object.keys(quiz).length*100).toString();
     return score + '%';
 }
 
+// STAGE 1
 // Prompt for user input
 var displayQuestion = function(number){
     var newQuestionPrompt = $("<p>").text(quiz[number].question).addClass(".question-text");
@@ -64,26 +66,49 @@ var displayQuestion = function(number){
         newChoice.appendTo(".quiz-choice-text");
     }
 
+    // Begin Countdown!
+    timerStart();
+
     // Event Listener to get user input
     $(".user-choice").on("click", function(){
+        timerStop();
         // Error checking to prevent multiple click scoring
         if(!newQuestionPrompt.hasClass("answered")){
             newQuestionPrompt.addClass("answered");
+            
+            // Pass text of clicked element into userInput variable
             var userInput = $(this).text();
 
+            // Check for correctness
             if(userInput === quiz[number].answer) {
                 correctAnswers ++;     
-                console.log("Correct!");
-            } else {
-                console.log("Wrong!");
             }
-
+            // Proceed to next phase (display answer)
+            displayAnswer(number, userInput);
         }
     });
 }
 
-var displayAnswer = function(qNumber, userInput){
+// STAGE 2
+// Display answer and feedback to user
+var displayAnswer = function(number, userInput){
+    console.log('Question number: ' + number);
+    console.log('User\'s input: ' + userInput);
+    if(userInput === quiz[number].answer){
+        console.log('User answered correct!');
+    } else {
+        console.log('User answered...poorly...');
+    }
+}
 
+// STAGE 3
+// Display results
+var displayResult = function(){
+    console.log('')
+}
+
+var timesUp = function(){
+    console.log('timesUp function just fired!');
 }
 
 var clearQuestion = function() {
@@ -94,16 +119,39 @@ var clearQuestion = function() {
 var timerStart = function() {
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
+        clockRunning = true;
       }
 }
 
 var timerStop = function() {
-    intervalId = clearInterval(count);
+    intervalId = clearInterval(intervalId);
     clockRunning = false;
 }
 
-var count = function() {
-    time--;
-    $(".timer-text").text(time);
+var timerReset = function() {
+    clockRunning = false;
+    timeLeft = 45;
 }
-displayQuestion(1) // Test Case
+
+var count = function() {
+    $(".timer-text").text(timeLeft);
+    if(timeLeft < 1){
+        timerStop();
+        timesUp();
+    }
+    timeLeft--;
+}
+
+
+displayQuestion(3) // Test Case
+
+
+/******* Testing Game Flow *********
+
+for(var i = 0; i <= Object.keys(quiz).length+1; i++){
+    displayQuestion(i);
+}
+
+displayResult
+
+***********************************/
