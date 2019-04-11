@@ -1,0 +1,25 @@
+.splash-section {
+    display: none;
+}
+
+.question-section {
+    /* display: none; */
+}
+
+.answer-section {
+    /* display: none; */
+}
+
+.result-section {
+    display: none;
+}
+
+li {
+    list-style-type: none;
+    margin: 1em;
+    padding: 1em;
+}
+
+li:hover {
+    border: 1px solid black;
+}
