@@ -55,6 +55,7 @@ var getScore = function() {
 // STAGE 1
 // Prompt for user input
 var displayQuestion = function(number){
+    console.log("Prompting question " + number);    
     var newQuestionPrompt = $("<p>").text(quiz[number].question).addClass(".question-text");
     newQuestionPrompt.appendTo(".question-section");
 
@@ -107,8 +108,14 @@ var displayResult = function(){
     console.log('')
 }
 
+// STAGE 4
+// Reset game and stats
+var resetGame = function() {}
+
 var timesUp = function(){
     console.log('timesUp function just fired!');
+    // Display times up div
+    // Call next quesion
 }
 
 var clearQuestion = function() {
@@ -142,16 +149,12 @@ var count = function() {
     timeLeft--;
 }
 
-
-displayQuestion(3) // Test Case
-
-
-/******* Testing Game Flow *********
-
-for(var i = 0; i <= Object.keys(quiz).length+1; i++){
-    displayQuestion(i);
+// Game Entry Point
+var startGame = function() {
+    for(var i = 0; i <= Object.keys(quiz).length+1; i++){
+        displayQuestion(i);
+    }
+    displayResult();
 }
 
-displayResult
-
-***********************************/
+startGame();
