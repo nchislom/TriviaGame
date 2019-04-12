@@ -1,8 +1,10 @@
+/* -------------- ALWAYSON/GLOBAL ELEMENTS -------------- */
+
 body {
 
 }
 
-.game-screen {
+.game-screen-container {
     text-align: center;
     border: 1px solid black;
     width: 90%;
@@ -11,25 +13,49 @@ body {
 }
 
 .header {
-    font-size: 5em;
+    font-size: 4em;
 }
 
-.timer-text {
-    border: 1px solid black;
-    padding: 1.5em;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1em;
-    /* width: 50%; */
-    display: inline-block;
-}
 
-.splash-section {
+
+/* -------------- ON/OFF TRIGGERED ELEMENTS -------------- */
+
+.splash-screen {
     display: none;
 }
 
+.game-screen {
+    display: none;
+}
+
+.game-result-screen {
+    display: none;
+}
+
+.question-result-screen {
+    display: none;
+}
+
+.timer {
+    border: 1px solid black;
+    padding: 1.5em;
+    display: inline-block;
+}
+
+
+
+
+
+
+/* -------------- STYLISTIC ELEMENTS -------------- */
+
+.timer-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+}
+
 .question-section {
-    /* display: none; */
-    font-size: 3em;
+    font-size: 2em;
     font-weight: 600;
     border-bottom: 1px solid #777;
     width: 50%;
@@ -37,11 +63,6 @@ body {
 }
 
 .answer-section {
-    /* display: none; */
-}
-
-.question-result {
-
 }
 
 .correct {
@@ -52,10 +73,6 @@ body {
 .wrong {
     background-color: green;
     color: white;
-}
-
-.result-section {
-    display: none;
 }
 
 li {

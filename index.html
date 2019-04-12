@@ -12,22 +12,23 @@
     <title>Dune Trivia!</title>
 </head>
 <body>
-    <div class="container game-screen">
+    <div class="container game-screen-container">
         <h1 class="header">Dune Trivia!</h1>
-        <p class="timer-text"></p>
+        <p class="timer timer-text"></p>
         
-        <div class="splash-section">
+        <div class="splash-screen">
             <p class="splash-text"></p>
             <button type="button">BEGIN</button>
         </div>
-
-        <div class="question-section"></div>
-
-        <div class="answer-section"></div>
+        
+        <div class="game-screen">
+            <div class="question-section"></div>
+            <div class="answer-section"></div>
+        </div>
 
         <div class="question-result-screen"></div>
 
-        <div class="result-section">
+        <div class="game-result-screen">
             <p class="result-text">You scored <span id="score-text"></span></p>
             <p class="result-text">Correct: <span id="score-text"></span></p>
             <p class="result-text">Incorrect: <span id="score-text"></span></p>
