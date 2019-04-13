@@ -22,42 +22,77 @@ var quiz = {
         question: 'CHOAM is an acronym for:',
         choice: ['Chaperhouse Omni Aulos Merit', 'Cerebrus Hecate Ordos Mori', 'Combine Honnete Ober Advancer Mercantiles', 'Cows, Horses, Orcas, and Manitees'],
         answer: 'Combine Honnete Ober Advancer Mercantiles',
-        image: 'https://place-hold.it/200x200'
+        image: './assets/images/choam.png'
     },
 
     1: {
         question: 'What is a mentat?',
         choice: ['A unit of curreny', 'A human computer', 'A masculine tattoo', 'A unit of interstellar distance'],
         answer: 'A human computer',
-        image: 'https://place-hold.it/200x200'
+        image: './assets/images/thufir.jpg'
     },
 
     2: {
         question: 'What can spice (melange) be used for?',
         choice: ['Extend life', 'Space travel', 'Expand conciousness', 'All of the above'],
         answer: 'All of the above',
-        image: 'https://place-hold.it/200x200'
+        image: './assets/images/spice.png'
     },
 
     3: {
         question: 'What planet is the ancestral home of Duke Leto Atreides?',
         choice: ['Caladan', 'Arrakis', 'Ix', 'Giedi Prime'],
         answer: 'Caladan',
-        image: 'https://place-hold.it/200x200'
+        image: './assets/images/caladan.jpg'
     },
 
     4: {
         question: 'In what year is Alia Atreides born?',
         choice: ['88 BG', '1999 AD', '10193 BG', '10191 AG'],
         answer: '10191 AG',
-        image: 'https://place-hold.it/200x200'
+        image: './assets/images/alia.gif'
     },
 
     5: {
         question: 'The Litany Against ______ is used to help focus the mind in times of peril. (Fill in the blank)',
         choice: ['Death', 'Fear', 'JQuery', 'Clarity'],
         answer: 'Fear',
-        image: 'https://place-hold.it/200x200'
+        image: './assets/images/benegesserit.jpg'
+    },
+    
+    6: {
+        question: 'Who is the daughter of Liet Kynes',
+        choice: ['Jessica', 'Helen', 'Chani', 'Irulan'],
+        answer: 'Chani',
+        image: './assets/images/chani.jpg'
+    },
+
+    7: {
+        question: '"Muad\'Dib", the name taken by the protagonist of the first novel, is also the name of a:',
+        choice: ['Mouse', 'Sandworm', 'Moon', 'Poison'],
+        answer: 'Mouse',
+        image: './assets/images/mouse.png'
+    },
+
+    8: {
+        question: 'Glossu Rabban Harkonnen is also known as...',
+        choice: ['The Sourge', 'The Beast', 'The Dragon', 'The Hydra'],
+        answer: 'The Beast',
+        image: './assets/images/rabban.jpg'
+    },
+
+    9: {
+        question: 'What is the name of the historic battle that created rivals of House Atreides and House Harkonnen?',
+        choice: ['Gom Jabbar', 'The Great Divide', 'The Butlerian Jihad', 'The Battle of Corrin'],
+        answer: 'The Battle of Corrin',
+        image: './assets/images/corrin.jpg'
+    },
+
+    10: {
+        question: 'What is a thumper?',
+        choice: ['A lure', 'A bomb', 'A rabbit', 'A subwoofer'],
+        answer: 'A lure',
+        image: './assets/images/sandworm.jpg'
     }
 }
 
@@ -81,8 +116,6 @@ var displayQuestion = function() {
     timer.css("display", "inline-block");
     gameScreen.css("display", "block");
     
-    
-
     var newQuestionPrompt = $("<p>").text(quiz[currentQuestion].question).addClass(".question-text");
     newQuestionPrompt.appendTo(".question-section");
 
@@ -128,14 +161,15 @@ var displayAnswer = function(number, userInput) {
     questionResultScreen.css("display", "block");
     $(".question-result-img").empty();
     if(userInput === quiz[number].answer){
+        console.log(quiz[number].image);
         $(".question-feedback").text("CORRECT!");
         $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
     } else if(userInput === "timeout"){
         $(".question-feedback").text("TIMES UP!");
-        $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
+        $("<img>").attr("src", "./assets/images/piter.gif").appendTo(".question-result-img");
     } else {
         $(".question-feedback").text("WRONG!");
-        $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
+        $("<img>").attr("src", "./assets/images/baron.gif").appendTo(".question-result-img");
     }
     currentQuestion++;
     timeLeft = 15;
@@ -149,7 +183,22 @@ var displayAnswer = function(number, userInput) {
 // STAGE 3
 // Display game results & stats
 var displayGameResult = function() {
-    console.log('Game Result Function called!');
+    questionResultScreen.css("display", "none");
+    gameResultScreen.css("display", "block");
+    $("#score-text").text(getScore());
+    $("#correct-text").text(correctAnswers);
+    $("#incorrect-text").text(Object.keys(quiz).length - correctAnswers);
+    if((correctAnswers/Object.keys(quiz).length*100) >= 90) {
+        $("#level-text").text("Great Maker");
+    } else if((correctAnswers/Object.keys(quiz).length*100) >= 80) {
+        $("#level-text").text("Shai Hulud");
+    } else if((correctAnswers/Object.keys(quiz).length*100) >= 70) {
+        $("#level-text").text("Sandworm");
+    } else if((correctAnswers/Object.keys(quiz).length*100) >= 60) {
+        $("#level-text").text("Sandtrout");
+    } else {
+        $("#level-text").text("Sand Plankton");
+    }
 }
 
 // STAGE 4
@@ -203,8 +252,17 @@ var count = function() {
     timeLeft--;
 }
 
-resetGameStats();
-splashScreen.css("display", "none");
-timer.css("display", "inline-block");
-gameScreen.css("display", "block");
-displayQuestion(currentQuestion);
+var startGame = function() {
+    resetGameStats();
+    splashScreen.css("display", "none");
+    gameResultScreen.css("display", "none");
+    timer.css("display", "inline-block");
+    gameScreen.css("display", "block");
+    displayQuestion(currentQuestion);
+}
+
+$(document).ready(function(){
+    splashScreen.css("display", "block");
+    $(".play-button").on("click", startGame);
+});
+

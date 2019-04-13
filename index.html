@@ -7,13 +7,18 @@
     
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Megrim|Monoton|Press+Start+2P" rel="stylesheet">
     
+    <!-- custom styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
     <title>Dune Trivia!</title>
 </head>
 <body>
     <div class="container game-screen-container">
-        <h1 class="header">Dune Trivia!</h1>
+        <h1 class="header">Dune-Trivia!</h1>
         <p class="timer timer-text"></p>
         
         <div class="splash-screen">
@@ -32,10 +37,11 @@
         </div>
 
         <div class="game-result-screen">
+            <img src="./assets/images/awakened.gif">
             <p class="result-text">Your score: <span id="score-text"></span></p>
             <p class="result-text">Correct: <span id="correct-text"></span></p>
             <p class="result-text">Incorrect: <span id="incorrect-text"></span></p>
-            <p class="result-text"><span id="game-feedback-text"></span></p>
+            <p class="result-text">Level: <span id="level-text"></span></p>
             <button type="button" class="play-button">PLAY AGAIN?</button>
         </div>
     </div>
