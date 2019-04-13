@@ -125,7 +125,7 @@ var quiz = {
 }
 
 // STAGE 0
-// Display splash screen and reset game stats
+// Display splash screen, hide unneeded elements, and reset game stats
 var displaySplashScreen = function() {
     splashScreen.css("display", "block");
     timer.css("display", "none");
@@ -137,7 +137,8 @@ var displaySplashScreen = function() {
 // STAGE 1
 // Prompt for user input
 var displayQuestion = function() {
-    // timeLeft = 15;
+    
+    // New prompt setup
     correct = false;
     splashScreen.css("display", "none");
     questionResultScreen.css("display", "none");
@@ -150,6 +151,7 @@ var displayQuestion = function() {
     var newList = $("<ul>");
     newList.appendTo(".answer-section").addClass("quiz-choice-text");
     
+    // List out answer options
     for(var i=0; i<quiz[currentQuestion].choice.length; i++){
         var newChoice = $("<li>").addClass("user-choice").text(quiz[currentQuestion].choice[i]);
         newChoice.appendTo(".quiz-choice-text");
@@ -195,7 +197,6 @@ var displayAnswer = function(number, userInput) {
 
     // Answer checking logic
     if(userInput === quiz[number].answer){
-        console.log(quiz[number].image);
         $(".question-feedback").text("CORRECT!");
         $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
     } else if(userInput === "timeout"){
@@ -225,6 +226,8 @@ var displayAnswer = function(number, userInput) {
 var displayGameResult = function() {
     questionResultScreen.css("display", "none");
     gameResultScreen.css("display", "block");
+
+    // Push game round info to DOM
     $("#score-text").text(getScore());
     $("#correct-text").text(correctAnswers);
     $("#incorrect-text").text(Object.keys(quiz).length - correctAnswers);
@@ -262,16 +265,12 @@ var timesUp = function() {
     displayAnswer(currentQuestion, "timeout");
 }
 
-// var clearQuestion = function() {
-//     $(".question-section").empty();
-//     $(".answer-section").empty();
-// }
-
+/********************* START Timer related functions ******************/
 var timerStart = function() {
     if (!clockRunning) {
         intervalId = setInterval(count, 1000);
         clockRunning = true;
-      }
+    }
 }
 
 var timerStop = function() {
@@ -292,7 +291,10 @@ var count = function() {
     }
     timeLeft--;
 }
+/********************* END Timer related functions ******************/
 
+
+// Game Entry Point
 var startGame = function() {
     resetGameStats();
     splashScreen.css("display", "none");
@@ -302,6 +304,7 @@ var startGame = function() {
     displayQuestion(currentQuestion);
 }
 
+// Document readiness. Prevents splash screen weirdness
 $(document).ready(function(){
     splashScreen.css("display", "block");
     $(".play-button").on("click", startGame);
