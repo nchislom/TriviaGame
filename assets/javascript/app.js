@@ -171,8 +171,12 @@ var displayAnswer = function(number, userInput) {
         $(".question-feedback").text("WRONG!");
         $("<img>").attr("src", "./assets/images/baron.gif").appendTo(".question-result-img");
     }
+
+    $("<p>").text("The answer was " + quiz[number].answer + "!").css("text-style", "italics").appendTo(".question-feedback");
+    
     currentQuestion++;
     timeLeft = 15;
+    
     if(currentQuestion < Object.keys(quiz).length){
         setTimeout(displayQuestion, 2000);
     } else {
