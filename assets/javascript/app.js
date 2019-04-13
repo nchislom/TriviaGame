@@ -26,14 +26,14 @@ var quiz = {
     },
 
     1: {
-        question: 'What is a mentat?',
+        question: 'What is a \'mentat\'?',
         choice: ['A unit of curreny', 'A human computer', 'A masculine tattoo', 'A unit of interstellar distance'],
         answer: 'A human computer',
         image: './assets/images/thufir.jpg'
     },
 
     2: {
-        question: 'What can spice (melange) be used for?',
+        question: 'What can spice be used for?',
         choice: ['Extend life', 'Space travel', 'Expand conciousness', 'All of the above'],
         answer: 'All of the above',
         image: './assets/images/spice.png'
@@ -61,7 +61,7 @@ var quiz = {
     },
     
     6: {
-        question: 'Who is the daughter of Liet Kynes',
+        question: 'Who is the daughter of Liet-Kynes',
         choice: ['Jessica', 'Helen', 'Chani', 'Irulan'],
         answer: 'Chani',
         image: './assets/images/chani.jpg'
@@ -75,9 +75,9 @@ var quiz = {
     },
 
     8: {
-        question: 'Glossu Rabban Harkonnen is also known as...',
-        choice: ['The Sourge', 'The Beast', 'The Dragon', 'The Hydra'],
-        answer: 'The Beast',
+        question: 'Glossu Rabban Harkonnen is also known as the ________',
+        choice: ['Sourge', 'Beast', 'Dragon', 'Hydra'],
+        answer: 'Beast',
         image: './assets/images/rabban.jpg'
     },
 
@@ -93,6 +93,34 @@ var quiz = {
         choice: ['A lure', 'A bomb', 'A rabbit', 'A subwoofer'],
         answer: 'A lure',
         image: './assets/images/sandworm.jpg'
+    },
+
+    11: {
+        question: 'Paul and Jessica are accepted into which Fremen community?',
+        choice: ['Red Chasm Sietch', 'Sietch Jacurutu', 'Seitch Tabr', 'Windgap Sietch'],
+        answer: 'Seitch Tabr',
+        image: './assets/images/longlive.gif'
+    },
+
+    12: {
+        question: 'Which is NOT one of the \'Great Houses\' of the Landsraad?',
+        choice: ['House Harkonnen', 'House Gryffindor', 'House Atreides', 'House Corrino'],
+        answer: 'House Gryffindor',
+        image: './assets/images/gryffindor.jpg'
+    },
+
+    13: {
+        question: 'Eldest daughter and heir of House Corrino:',
+        choice: ['Chani', 'Irulan', 'Jessica', 'Margot'],
+        answer: 'Irulan',
+        image: './assets/images/irulan.gif'
+    },
+
+    14: {
+        question: 'Gurney Halleck, the staunchly loyal troubadour warrior of House Atreides, was played by what actor in the 1984 film adaptation of the book?',
+        choice: ['Brad Dourif', 'Max von Sydow', 'Sting', 'Patrick Stewart'],
+        answer: 'Patrick Stewart',
+        image: './assets/images/patrick.gif'
     }
 }
 
@@ -154,12 +182,18 @@ var displayQuestion = function() {
 // STAGE 2
 // Display answer and feedback to user
 var displayAnswer = function(number, userInput) {
+    
+    // Clear elements to prevent old content 'stacking'
     $(".question-section").empty();
     $(".answer-section").empty();
+    $(".question-result-img").empty();
+
+    // Switch on/off elements
     timer.css("display", "none");
     gameScreen.css("display", "none");
     questionResultScreen.css("display", "block");
-    $(".question-result-img").empty();
+
+    // Answer checking logic
     if(userInput === quiz[number].answer){
         console.log(quiz[number].image);
         $(".question-feedback").text("CORRECT!");
@@ -172,15 +206,17 @@ var displayAnswer = function(number, userInput) {
         $("<img>").attr("src", "./assets/images/baron.gif").appendTo(".question-result-img");
     }
 
+    // Generate and append user feedback paragraph element
     $("<p>").text("The answer was " + quiz[number].answer + "!").css("text-style", "italics").appendTo(".question-feedback");
     
     currentQuestion++;
     timeLeft = 15;
     
+    // Logic for proceeding to next question or end of game in 2.75 seconds
     if(currentQuestion < Object.keys(quiz).length){
-        setTimeout(displayQuestion, 2000);
+        setTimeout(displayQuestion, 2750);
     } else {
-        setTimeout(displayGameResult, 2000);
+        setTimeout(displayGameResult, 2750);
     }
 }
 
@@ -215,20 +251,21 @@ var resetGameStats = function() {
     clockRunning = false;
 }
 
-// Score Calculation 
+// Score Calculation Function
 var getScore = function() {
     var score = Math.floor(correctAnswers/Object.keys(quiz).length*100).toString();
     return score + '%';
 }
 
+// Helper function that injects "timeout" for userInput in order to fire a different function
 var timesUp = function() {
     displayAnswer(currentQuestion, "timeout");
 }
 
-var clearQuestion = function() {
-    $(".question-section").empty();
-    $(".answer-section").empty();
-}
+// var clearQuestion = function() {
+//     $(".question-section").empty();
+//     $(".answer-section").empty();
+// }
 
 var timerStart = function() {
     if (!clockRunning) {

@@ -21,6 +21,7 @@ body {
 .header {
     font-size: 6em;
     font-family: 'Monoton', sans-serif;
+    margin-bottom: 0;
 }
 
 
@@ -93,6 +94,10 @@ body {
 .wrong {
     background-color: green;
     color: white;
+}
+
+img {
+    height: 300px;
 }
 
 li {
