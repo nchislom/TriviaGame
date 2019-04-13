@@ -17,8 +17,8 @@
         <p class="timer timer-text"></p>
         
         <div class="splash-screen">
-            <p class="splash-text"></p>
-            <button type="button">BEGIN</button>
+            <p class="splash-text">Welcome! You will have 15 seconds to answer each question about the science-fiction masterwork, Dune, written by Frank Herbert.</p>
+            <button type="button" class="play-button">BEGIN</button>
         </div>
         
         <div class="game-screen">
@@ -26,14 +26,17 @@
             <div class="answer-section"></div>
         </div>
 
-        <div class="question-result-screen"></div>
+        <div class="question-result-screen">
+            <div class="question-result-img"></div>
+            <p class="question-feedback"></p>
+        </div>
 
         <div class="game-result-screen">
-            <p class="result-text">You scored <span id="score-text"></span></p>
-            <p class="result-text">Correct: <span id="score-text"></span></p>
-            <p class="result-text">Incorrect: <span id="score-text"></span></p>
+            <p class="result-text">Your score: <span id="score-text"></span></p>
+            <p class="result-text">Correct: <span id="correct-text"></span></p>
+            <p class="result-text">Incorrect: <span id="incorrect-text"></span></p>
             <p class="result-text"><span id="game-feedback-text"></span></p>
-            <button type="button">PLAY AGAIN?</button>
+            <button type="button" class="play-button">PLAY AGAIN?</button>
         </div>
     </div>
 

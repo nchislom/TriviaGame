@@ -5,13 +5,16 @@ var currentQuestion = 0;
 
 // Globals - Timer Functionality
 var clockRunning = false;
-var timeLeft = 5;
+var timeLeft = 15;
 var intervalId;
 
 // Globals - DOM elements
-var splashDiv = $(".splash-section");
-var questionDiv
-var answerDiv
+var splashScreen = $(".splash-screen");
+var timer = $(".timer");
+var gameScreen = $(".game-screen");
+var questionResultScreen = $(".question-result-screen");
+var gameResultScreen = $(".game-result-screen");
+var playButton = $(".play-button");
 
 // Global - Quiz Object
 var quiz = {
@@ -58,30 +61,36 @@ var quiz = {
     }
 }
 
-// Score Calculation 
-var getScore = function() {
-    var score = Math.floor(correctAnswers/Object.keys(quiz).length*100).toString();
-    return score + '%';
-}
-
 // STAGE 0
 // Display splash screen and reset game stats
 var displaySplashScreen = function() {
-
+    splashScreen.css("display", "block");
+    timer.css("display", "none");
+    gameScreen.css("display", "none");
+    questionResultScreen.css("display", "none");
+    gameResultScreen.css("display", "none");
 }
 
 // STAGE 1
 // Prompt for user input
-var displayQuestion = function(number){
-    console.log("Prompting question " + number);    
-    var newQuestionPrompt = $("<p>").text(quiz[number].question).addClass(".question-text");
+var displayQuestion = function() {
+    // timeLeft = 15;
+    correct = false;
+    splashScreen.css("display", "none");
+    questionResultScreen.css("display", "none");
+    timer.css("display", "inline-block");
+    gameScreen.css("display", "block");
+    
+    
+
+    var newQuestionPrompt = $("<p>").text(quiz[currentQuestion].question).addClass(".question-text");
     newQuestionPrompt.appendTo(".question-section");
 
     var newList = $("<ul>");
     newList.appendTo(".answer-section").addClass("quiz-choice-text");
     
-    for(var i=0; i<quiz[number].choice.length; i++){
-        var newChoice = $("<li>").addClass("user-choice").text(quiz[number].choice[i]);
+    for(var i=0; i<quiz[currentQuestion].choice.length; i++){
+        var newChoice = $("<li>").addClass("user-choice").text(quiz[currentQuestion].choice[i]);
         newChoice.appendTo(".quiz-choice-text");
     }
 
@@ -99,46 +108,68 @@ var displayQuestion = function(number){
             var userInput = $(this).text();
 
             // Check for correctness
-            if(userInput === quiz[number].answer) {
-                correctAnswers ++;     
+            if(userInput === quiz[currentQuestion].answer) {
+                correctAnswers ++;
+                correct = true;   
             }
             // Proceed to next phase (display answer)
-            displayAnswer(number, userInput);
+            displayAnswer(currentQuestion, userInput);
         }
     });
 }
 
 // STAGE 2
 // Display answer and feedback to user
-var displayAnswer = function(number, userInput){
-    console.log('Question number: ' + number);
-    console.log('User\'s input: ' + userInput);
+var displayAnswer = function(number, userInput) {
+    $(".question-section").empty();
+    $(".answer-section").empty();
+    timer.css("display", "none");
+    gameScreen.css("display", "none");
+    questionResultScreen.css("display", "block");
+    $(".question-result-img").empty();
     if(userInput === quiz[number].answer){
-        console.log('User answered correct!');
+        $(".question-feedback").text("CORRECT!");
+        $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
+    } else if(userInput === "timeout"){
+        $(".question-feedback").text("TIMES UP!");
+        $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
     } else {
-        console.log('User answered...poorly...');
+        $(".question-feedback").text("WRONG!");
+        $("<img>").attr("src", quiz[number].image).appendTo(".question-result-img");
+    }
+    currentQuestion++;
+    timeLeft = 15;
+    if(currentQuestion < Object.keys(quiz).length){
+        setTimeout(displayQuestion, 2000);
+    } else {
+        setTimeout(displayGameResult, 2000);
     }
 }
 
 // STAGE 3
-// Display results
-var displayResult = function(){
-    console.log('')
+// Display game results & stats
+var displayGameResult = function() {
+    console.log('Game Result Function called!');
 }
 
 // STAGE 4
 // Reset game and stats
 var resetGameStats = function() {
+    timeLeft = 15;
     correctAnswers = 0;
     correct = false;
     currentQuestion = 0;
     clockRunning = false;
 }
 
-var timesUp = function(){
-    console.log('timesUp function just fired!');
-    // Display times up div
-    // Call next quesion
+// Score Calculation 
+var getScore = function() {
+    var score = Math.floor(correctAnswers/Object.keys(quiz).length*100).toString();
+    return score + '%';
+}
+
+var timesUp = function() {
+    displayAnswer(currentQuestion, "timeout");
 }
 
 var clearQuestion = function() {
@@ -172,12 +203,8 @@ var count = function() {
     timeLeft--;
 }
 
-// Game Entry Point
-// var startGame = function() {
-//     for(var i = 0; i <= Object.keys(quiz).length+1; i++){
-//         displayQuestion(i);
-//     }
-//     displayResult();
-// }
-
-startGame();
+resetGameStats();
+splashScreen.css("display", "none");
+timer.css("display", "inline-block");
+gameScreen.css("display", "block");
+displayQuestion(currentQuestion);

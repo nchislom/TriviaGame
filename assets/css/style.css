@@ -39,7 +39,7 @@ body {
 .timer {
     border: 1px solid black;
     padding: 1.5em;
-    display: inline-block;
+    display: none;
 }
 
 
